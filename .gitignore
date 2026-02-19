@@ -2,3 +2,4 @@ cosign.key
 _build_*
 output
 _build-*/**
+kernel-6.18.0+-5.x86_64.rpm
