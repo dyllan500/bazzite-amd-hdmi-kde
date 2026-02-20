@@ -49,7 +49,7 @@ dnf5 -y remove --no-autoremove ${pkgs[@]}
 
 cat /ctx/KF?? > /tmp/kernel-6.18.0+-5.x86_64.rpm
 
-dnf5 --setopt=disable_excludes=* install -y /ctx/kernel-*.rpm /tmp/kernel-6.18.0+-5.x86_64.rpm
+dnf5 --setopt=disable_excludes=* install -y /ctx/kernel-*.rpm /tmp/kernel-*.rpm
 
 pushd /usr/lib/kernel/install.d
 mv -f 05-rpmostree.install.bak 05-rpmostree.install
