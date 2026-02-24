@@ -47,7 +47,7 @@ pkgs=(
 
 dnf5 -y remove --no-autoremove ${pkgs[@]}
 
-cat /ctx/KF?? > /tmp/kernel-6.18.0+-11.x86_64.rpm
+cat /ctx/KF?? > /tmp/kernel-split.rpm
 
 dnf5 --setopt=disable_excludes=* install -y /ctx/kernel-*.rpm /tmp/kernel-*.rpm
 
