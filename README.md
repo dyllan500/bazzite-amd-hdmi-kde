@@ -1,6 +1,6 @@
 # bazzite-amd-hdmi
 
-A carbon copy of the bazzite-deck-gnome image, but with the Bazzite kernel subbed out for a custom compiled kernel with the HDMI 2.1 patches from here: https://github.com/mkopec/linux/tree/hdmi_frl
+A carbon copy of the bazzite-deck-kde image, but with the Bazzite kernel subbed out for a custom compiled kernel with the HDMI 2.1 patches from here: https://github.com/mkopec/linux/tree/hdmi_frl
 Keeping the rest of the readme from the custom image repo for reference: https://github.com/ublue-os/image-template
 
 # Community
