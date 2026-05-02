@@ -1,6 +1,55 @@
-# bazzite-amd-hdmi
+# bazzite-amd-hdmi-kde
 
-A carbon copy of the bazzite-deck-kde image, but with the Bazzite kernel subbed out for a custom compiled kernel with the HDMI 2.1 patches from amd's offical patches here: [https://github.com/mkopec/linux/tree/hdmi_frl](https://lore.kernel.org/amd-gfx/20260501140441.41068-1-harry.wentland@amd.com/)
+A carbon copy of the bazzite-deck-kde image, with the stock Bazzite
+kernel replaced by a custom-built kernel carrying AMD's official
+HDMI 2.1 FRL series from the amd-gfx mailing list, plus a one-line
+fix that lets the series actually run on DCN 3.0 silicon (Navi 21/22/23).
+
+The kernel is built from my fork of agd5f/amd-staging-drm-next here:
+https://gitlab.freedesktop.org/dyllan500/linux/-/tree/harry-frl-v1
+
+Upstream source of the FRL patches:
+https://lore.kernel.org/amd-gfx/20260501140441.41068-1-harry.wentland@amd.com/
+
+## What this image is *not*
+
+- Not based on the older community FRL fork (`mkopec/linux:hdmi_frl`), images 20260421 and later contains that kernel
+- Not carrying DSC support (not yet sent by AMD per their cover letter)
+
+Once Harry's series merges to amd-staging-drm-next / drm-next with the
+dcn30 fix folded in, this image becomes obsolete and you should rebase
+onto a stock Bazzite kernel that includes it.
+
+## Building locally
+
+The Containerfile pulls `ghcr.io/ublue-os/bazzite-deck:stable` as the
+base, removes the stock kernel packages, and installs custom-built
+kernel RPMs from `build_files/`.
+
+To build a fresh kernel from my fork:
+
+```bash
+git clone https://gitlab.freedesktop.org/dyllan500/linux.git -b harry-frl-v1
+cd linux
+cp /boot/config-$(uname -r) .config
+sed -i 's|^CONFIG_SYSTEM_TRUSTED_KEYS=.*|CONFIG_SYSTEM_TRUSTED_KEYS=""|' .config
+sed -i 's|^CONFIG_SYSTEM_REVOCATION_KEYS=.*|CONFIG_SYSTEM_REVOCATION_KEYS=""|' .config
+yes "" | make olddefconfig
+make -j$(nproc) binrpm-pkg
+```
+
+Then drop the resulting RPMs from ~/rpmbuild/RPMS/x86_64/ (or
+./rpmbuild/RPMS/x86_64/ depending on your kernel makefile) into
+build_files/. The main kernel-*.rpm is over GitHub's 100 MB file
+size limit, so split it:
+
+```bash
+split -b 50M kernel-X.Y.Z+.x86_64.rpm KF
+```
+
+Then `just` build to produce the OCI image.
+
+
 Keeping the rest of the readme from the custom image repo for reference: https://github.com/ublue-os/image-template
 
 # Community
