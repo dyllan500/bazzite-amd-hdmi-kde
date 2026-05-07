@@ -13,10 +13,9 @@ Upstream source of the FRL patches:
 ## What this image is *not*
 
 - Not based on the older community FRL fork (`mkopec/linux:hdmi_frl`), images 20260421 and later contains that kernel
-- Not carrying DSC support (not yet sent by AMD per their cover letter)
+- Does not have VRR support yet
 
-Once Harry's series merges to amd-staging-drm-next / drm-next with the
-dcn30 fix folded in, this image becomes obsolete and you should rebase
+Once Harry's series merges to amd-staging-drm-next / drm-next, this image becomes obsolete and you should rebase
 onto a stock Bazzite kernel that includes it.
 
 ## Building locally
